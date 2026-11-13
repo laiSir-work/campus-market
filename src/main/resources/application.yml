@@ -1,0 +1,17 @@
+# 提交到仓库的公共配置：不含任何密码 / 内网 IP
+# 本机私密配置见 application-local.yml（已被 .gitignore 排除，不会提交）
+
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: local
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true

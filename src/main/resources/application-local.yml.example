@@ -1,0 +1,14 @@
+# 复制本文件为 application-local.yml 并填入你自己的密码 / 地址
+# application-local.yml 不提交到仓库
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/campus_market?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: "你的MySQL密码"
+  data:
+    redis:
+      host: 你的Redis地址
+      port: 6379
+      database: 0

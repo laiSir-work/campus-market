@@ -1,0 +1,39 @@
+# ===== 私密配置：绝不提交 =====
+application-local.yml
+
+# ===== Java 构建产物 =====
+target/
+*.class
+*.jar
+!.mvn/wrapper/maven-wrapper.jar
+
+# ===== Maven =====
+.mvn/
+mvnw
+mvnw.cmd
+
+# ===== IDE：IntelliJ IDEA =====
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# ===== IDE：Eclipse / VS Code =====
+.classpath
+.project
+.settings/
+.vscode/
+
+# ===== 日志 =====
+logs/
+*.log
+
+# ===== 系统文件 =====
+.DS_Store
+Thumbs.db
+
+# ===== 临时/备份 =====
+*.tmp
+*.bak
+*~

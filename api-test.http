@@ -1,0 +1,52 @@
+### campus-market 接口联调脚本（IDEA 内置 HTTP Client，不用装 Apifox / Postman）
+### 用法：先启动应用，再从第 1 个请求开始，点每行左边的绿色三角「运行（Run）」依次执行。
+### 第 3 步会自动把 token 存成全局变量，第 5 步直接用 {{token}}，不用手动复制粘贴。
+
+### 0. 健康检查（Day1 留下的测试接口，能通说明服务活着）
+GET http://localhost:8080/abc
+
+### 1. 注册：第一次应返回 {"code":200,"message":"success"}
+POST http://localhost:8080/api/user/register
+Content-Type: application/json
+
+{
+  "username": "testuser01",
+  "password": "123456",
+  "nickname": "测试用户"
+}
+
+### 2. 再注册一次：应返回 {"code":1001,"message":"用户名已存在"}
+POST http://localhost:8080/api/user/register
+Content-Type: application/json
+
+{
+  "username": "testuser01",
+  "password": "123456"
+}
+
+### 3. 登录：应返回 code 200 + data.token，并自动保存 token
+POST http://localhost:8080/api/user/login
+Content-Type: application/json
+
+{
+  "username": "testuser01",
+  "password": "123456"
+}
+
+> {%
+client.test("登录成功且拿到 token", function() {
+    client.assert(response.body.code === 200, "code 应为 200");
+    client.assert(response.body.data.token, "data.token 不能为空");
+});
+client.global.set("token", response.body.data.token);
+%}
+
+### 4. 不带 token 访问 /me：应返回 {"code":401,"message":"未授权"}
+GET http://localhost:8080/api/user/me
+
+### 5. 带 token 访问 /me：应返回用户信息（不含 password 字段）
+GET http://localhost:8080/api/user/me
+Authorization: Bearer {{token}}
+
+### 6. 数据库侧验收：在「数据库（Database）」控制台里执行，password 必须是 $2a$10$ 开头的密文
+### select username, password from user;
